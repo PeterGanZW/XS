@@ -253,25 +253,31 @@
         };
         TweetJs.ListTweetsOnUserTimeline("xaviersymons",
             function (data) {
-                console.log(data);
+                var idx = 0;
+        while(!data[idx].entities.urls.hasOwnProperty('0')){
+          idx++;
+        }
+        var x = document.getElementById("tweet0");
+        var z = data[idx].text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '');
+        var path = data[idx].entities.urls[0].expanded_url.match(/\bhttps?:\/\/\S+/gi)[0];
+        x.innerHTML = "<a href= '" + path + " 'style='font-weight:normal';>" + z + "</a>"
+        var y = data[idx].created_at
+        y = y.split(" ")
+        var x = document.getElementById("day0");
+        x.innerHTML = "<span>" + y[2] + "</span><br />" + y[1]
 
-                var x = document.getElementById("tweet0");
-                var z = data[0].text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '');
-                var path = data[0].entities.urls[0].expanded_url.match(/\bhttps?:\/\/\S+/gi)[0];
-                x.innerHTML = "<a href= '" + path + " 'style='font-weight:normal';>" + z + "</a>"
-                var y = data[0].created_at
-                y = y.split(" ")
-                var x = document.getElementById("day0");
-                x.innerHTML = "<span>" + y[2] + "</span><br />" + y[1]
-
-                var x = document.getElementById("tweet1");
-                var z = data[1].text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '');
-                var path = data[1].entities.urls[0].expanded_url.match(/\bhttps?:\/\/\S+/gi)[0];
-                x.innerHTML = "<a href= '" + path + "' style='font-weight:normal'; >" + z + "</a>"
-                var y = data[1].created_at
-                y = y.split(" ")
-                var x = document.getElementById("day1");
-                x.innerHTML = "<span>" + y[2] + "</span><br />" + y[1]
+        idx++;
+        while(!data[idx].entities.urls.hasOwnProperty('0')){
+          idx++;
+        }
+        var x = document.getElementById("tweet1");
+        var z = data[idx].text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '');
+        var path = data[idx].entities.urls[0].expanded_url.match(/\bhttps?:\/\/\S+/gi)[0];
+        x.innerHTML = "<a href= '" + path + "' style='font-weight:normal'; >" + z + "</a>"
+        var y = data[idx].created_at
+        y = y.split(" ")
+        var x = document.getElementById("day1");
+        x.innerHTML = "<span>" + y[2] + "</span><br />" + y[1]
             });
     </script>
 </body>
