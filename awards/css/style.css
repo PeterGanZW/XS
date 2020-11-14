@@ -133,6 +133,10 @@ h7 {
 	border-left:1px solid #ddd;
 	padding:8px 0 0 15px;
 }
+.ftt {
+	border-left:0px solid #ddd;
+	padding:5px 0 0 15px;
+}
 .last {
 	margin-right:0;
 }
