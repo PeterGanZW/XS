@@ -248,3 +248,78 @@ input.submit {
 #links {
 	margin:0px 25px 0 40px;
 }
+
+/* Publications container styling for scrollable content */
+.publications-container {
+	max-height: 600px;
+	overflow-y: auto;
+	border: 1px solid #ddd;
+	padding: 20px;
+	margin: 20px 0;
+	background: #fff;
+}
+
+.publication-item {
+	display: flex;
+	margin-bottom: 20px;
+	padding-bottom: 15px;
+	border-bottom: 1px solid #eee;
+}
+
+.publication-item:last-child {
+	border-bottom: none;
+}
+
+.publication-type {
+	min-width: 100px;
+	color: #B00000;
+	font-weight: bold;
+	font-size: 0.9em;
+	text-transform: uppercase;
+	margin-right: 20px;
+	flex-shrink: 0;
+}
+
+.publication-content {
+	flex: 1;
+}
+
+.publication-title {
+	font-size: 1.1em;
+	margin: 0 0 8px 0;
+	font-weight: bold;
+}
+
+.publication-title a {
+	color: #2D648A;
+	text-decoration: none;
+}
+
+.publication-title a:hover {
+	color: #000;
+	text-decoration: underline;
+}
+
+.publication-details {
+	color: #777;
+	line-height: 1.5em;
+}
+
+/* Custom scrollbar styling for WebKit browsers */
+.publications-container::-webkit-scrollbar {
+	width: 8px;
+}
+
+.publications-container::-webkit-scrollbar-track {
+	background: #f1f1f1;
+	border-radius: 4px;
+}
+
+.publications-container::-webkit-scrollbar-thumb {
+	background: #B00000;
+	border-radius: 4px;
+}
+
+.publications-container::-webkit-scrollbar-thumb:hover {
+	background: #900000;
+}

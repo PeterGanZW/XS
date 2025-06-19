@@ -291,6 +291,55 @@
       return result;
     }
 
+    // Function to parse date strings into Date objects
+    function parseDate(dateString) {
+      // Handle various date formats commonly used in publications
+      const cleanDate = dateString.trim();
+
+      // Try parsing as-is first
+      let date = new Date(cleanDate);
+      if (!isNaN(date.getTime())) {
+        return date;
+      }
+
+      // Try parsing formats like "30 August 2023", "16 June 2022", etc.
+      const monthNames = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+      ];
+
+      // Match patterns like "30 August 2023" or "16 June 2022"
+      const match = cleanDate.match(/(\d{1,2})\s+(\w+)\s+(\d{4})/);
+      if (match) {
+        const day = parseInt(match[1]);
+        const monthName = match[2];
+        const year = parseInt(match[3]);
+        const monthIndex = monthNames.findIndex(month =>
+          month.toLowerCase().startsWith(monthName.toLowerCase().substring(0, 3))
+        );
+
+        if (monthIndex !== -1) {
+          date = new Date(year, monthIndex, day);
+          if (!isNaN(date.getTime())) {
+            return date;
+          }
+        }
+      }
+
+      // If all parsing fails, return a very old date so it appears last
+      console.warn('Could not parse date:', dateString);
+      return new Date('1900-01-01');
+    }
+
+    // Function to sort media data by date (latest first)
+    function sortMediaByDate(mediaData) {
+      return mediaData.sort((a, b) => {
+        const dateA = parseDate(a.date);
+        const dateB = parseDate(b.date);
+        return dateB - dateA; // Descending order (latest first)
+      });
+    }
+
     // Function to load media data from Google Sheets
     async function loadMediaFromSheets() {
       try {
@@ -302,9 +351,13 @@
         }
 
         const csvText = await response.text();
-        const mediaData = parseCSV(csvText);
+        let mediaData = parseCSV(csvText);
 
         console.log('Loaded', mediaData.length, 'articles from Google Sheets');
+
+        // Sort by date (latest first)
+        mediaData = sortMediaByDate(mediaData);
+        console.log('Sorted articles by publication date (latest first)');
 
         // Clear existing content and populate with new data
         populateMediaSection(mediaData);
